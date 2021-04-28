@@ -8,19 +8,44 @@ org 0000h
 
 org 0030h
 START:
-	MOV R5, #73
+	MOV R5, #70
 	ACALL lcd_init
-	MOV A, #06h
-	ACALL posicionaCursor       ; posiciona o cursor na coluna 06 da primeira linha
-	MOV A, R5
-	MOV B, #10
-	DIV AB                                     ; divide por 10 para extrair a dezena.
-	ADD A, #30h
-	ACALL sendCharacter	; send data in A to LCD module
-	MOV A, B
-	ADD A, #30h
-	ACALL sendCharacter	; send data in A to LCD module	
-	ACALL retornaCursor
+	mov a,#'G'
+	call sendCharacter
+	mov a,#'A'
+	call sendCharacter
+	mov a,#'N'
+	call sendCharacter
+	mov a,#'H'
+	call sendCharacter
+	mov a,#'A'
+	call sendCharacter
+	mov a,#'D'
+	call sendCharacter
+	mov a,#'O'
+	call sendCharacter
+	mov a,#'R'
+	call sendCharacter
+	mov a,#'_'
+	call sendCharacter
+	mov a,#'J'
+	call sendCharacter
+	mov a,#'O'
+	call sendCharacter
+	mov a,#'G'
+	call sendCharacter
+	mov a,#'A'
+	call sendCharacter
+	mov a,#'D'
+	call sendCharacter
+	mov a,#'O'
+	call sendCharacter
+	mov a,#'R'
+	call sendCharacter
+	mov a,#47H
+	acall posicionaCursor
+	mov a,#'1'
+	call sendCharacter
 	JMP $
 
 
