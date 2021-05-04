@@ -118,6 +118,17 @@ START:
 MAIN:
 	ACALL lcd_init
 ROTINA:
+	jmp rodada
+	JMP ROTINA
+
+rodada:
+	cpl p3.4
+	jnb p3.4 , rodada1
+	jmp rodada2
+	JMP ROTINA
+
+rodada1:
+	mov b, #02h
 	ACALL leituraTeclado
 	JNB F0, ROTINA   ;if F0 is clear, jump to ROTINA
 	MOV A, #07h
@@ -131,8 +142,21 @@ ROTINA:
 	CLR F0
 	JMP ROTINA
 
-
-
+	;esta caindo aqui
+rodada2:
+	mov b, #01h
+	ACALL leituraTeclado
+	JNB F0, ROTINA   ;if F0 is clear, jump to ROTINA
+	MOV A, #07h
+	ACALL posicionaCursor	
+	;MOV A, #40h		;aqui é o teclado do 'O'
+	MOV A, #20h	;aqui é o teclado do 'X'
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0        
+	ACALL sendCharacter
+	CLR F0
+	ret
 
 leituraTeclado:
 	MOV R0, #0			; clear R0 - the first key is key0
@@ -368,4 +392,3 @@ delay:
 	MOV R7, #50
 	DJNZ R7, $
 	RET
-
