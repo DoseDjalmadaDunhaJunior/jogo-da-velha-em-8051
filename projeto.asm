@@ -1,3 +1,77 @@
+;MOV R5, #70
+	;ACALL lcd_init
+	;mov a,#'G'
+	;call sendCharacter
+	;mov a,#'A'
+	;call sendCharacter
+	;mov a,#'N'
+	;call sendCharacter
+	;mov a,#'H'
+	;call sendCharacter
+	;mov a,#'A'
+	;call sendCharacter
+	;mov a,#'D'
+	;call sendCharacter
+	;mov a,#'O'
+	;call sendCharacter
+	;mov a,#'R'
+	;call sendCharacter
+	;mov a,#'_'
+	;call sendCharacter
+	;mov a,#'J'
+	;call sendCharacter
+	;mov a,#'O'
+	;call sendCharacter
+	;mov a,#'G'
+	;call sendCharacter
+	;mov a,#'A'
+	;call sendCharacter
+	;mov a,#'D'
+	;call sendCharacter
+	;mov a,#'O'
+	;call sendCharacter
+	;mov a,#'R'
+	;call sendCharacter
+	;mov a,#47H
+	;acall posicionaCursor
+	;mov a,#'1'
+	;call sendCharacter
+	;JMP $
+
+
+
+; When a key is pressed the key number
+; is placed in R0.
+
+; For this program, the keys are numbered
+; as:
+
+;	+----+----+----+
+;	| 11 | 10 |  9 |	row3
+;	+----+----+----+
+;	|  8 |  7 |  6 |	row2
+;	+----+----|----+
+;	|  5 |  4 |  3 |	row1
+;	+----+----+----+
+;	|  2 |  1 |  0 |	row0
+;	+----+----+----+
+;	 col2 col1 col0
+
+; The pressed key number will be stored in
+; R0. Therefore, R0 is initially cleared.
+; Each key is scanned, and if it is not
+; pressed R0 is incremented. In that way,
+; when the pressed key is found, R0 will
+; contain the key's number.
+
+; The general purpose flag, F0, is used
+; by the column-scan subroutine to indicate
+; whether or not a pressed key was found
+; in that column.
+; If, after returning from colScan, F0 is
+; set, this means the key was found.
+
+
 ; --- Mapeamento de Hardware (8051) ---
     RS      equ     P1.3    ;Reg Select ligado em P1.3
     EN      equ     P1.2    ;Enable ligado em P1.2
@@ -8,45 +82,101 @@ org 0000h
 
 org 0030h
 START:
-	MOV R5, #70
+; put data in RAM
+	;MOV 40H, #'#'
+	MOV 40H, #'-' 
+	;MOV 41H, #'0'
+	MOV 41H, #'-'
+	;MOV 42H, #'*'
+	MOV 42H, #'-'
+	MOV 43H, #'O'
+	MOV 44H, #'O'
+	MOV 45H, #'O'
+	MOV 46H, #'O'
+	MOV 47H, #'O'
+	MOV 48H, #'O'
+	MOV 49H, #'O'
+	MOV 4AH, #'O'
+	MOV 4BH, #'O'
+
+	;MOV 40H, #'#'
+	MOV 20H, #'-' 
+	;MOV 41H, #'0'
+	MOV 21H, #'-'
+	;MOV 42H, #'*'
+	MOV 22H, #'-'
+	MOV 23H, #'X'
+	MOV 24H, #'X'
+	MOV 25H, #'X'
+	MOV 26H, #'X'
+	MOV 27H, #'X'
+	MOV 28H, #'X'
+	MOV 29H, #'X'
+	MOV 2AH, #'X'
+	MOV 2BH, #'X'
+
+MAIN:
 	ACALL lcd_init
-	mov a,#'G'
-	call sendCharacter
-	mov a,#'A'
-	call sendCharacter
-	mov a,#'N'
-	call sendCharacter
-	mov a,#'H'
-	call sendCharacter
-	mov a,#'A'
-	call sendCharacter
-	mov a,#'D'
-	call sendCharacter
-	mov a,#'O'
-	call sendCharacter
-	mov a,#'R'
-	call sendCharacter
-	mov a,#'_'
-	call sendCharacter
-	mov a,#'J'
-	call sendCharacter
-	mov a,#'O'
-	call sendCharacter
-	mov a,#'G'
-	call sendCharacter
-	mov a,#'A'
-	call sendCharacter
-	mov a,#'D'
-	call sendCharacter
-	mov a,#'O'
-	call sendCharacter
-	mov a,#'R'
-	call sendCharacter
-	mov a,#47H
-	acall posicionaCursor
-	mov a,#'1'
-	call sendCharacter
-	JMP $
+ROTINA:
+	ACALL leituraTeclado
+	JNB F0, ROTINA   ;if F0 is clear, jump to ROTINA
+	MOV A, #07h
+	ACALL posicionaCursor	
+	MOV A, #40h		;aqui é o teclado do 'O'
+	;MOV A, #20h	;aqui é o teclado do 'X'
+	ADD A, R0
+	MOV R0, A
+	MOV A, @R0        
+	ACALL sendCharacter
+	CLR F0
+	JMP ROTINA
+
+
+
+
+leituraTeclado:
+	MOV R0, #0			; clear R0 - the first key is key0
+
+	; scan row0
+	MOV P0, #0FFh	
+	CLR P0.0			; clear row0
+	CALL colScan		; call column-scan subroutine
+	JB F0, finish		; | if F0 is set, jump to end of program 
+						; | (because the pressed key was found and its number is in  R0)
+	; scan row1
+	SETB P0.0			; set row0
+	CLR P0.1			; clear row1
+	CALL colScan		; call column-scan subroutine
+	JB F0, finish		; | if F0 is set, jump to end of program 
+						; | (because the pressed key was found and its number is in  R0)
+	; scan row2
+	SETB P0.1			; set row1
+	CLR P0.2			; clear row2
+	CALL colScan		; call column-scan subroutine
+	JB F0, finish		; | if F0 is set, jump to end of program 
+						; | (because the pressed key was found and its number is in  R0)
+	; scan row3
+	SETB P0.2			; set row2
+	CLR P0.3			; clear row3
+	CALL colScan		; call column-scan subroutine
+	JB F0, finish		; | if F0 is set, jump to end of program 
+						; | (because the pressed key was found and its number is in  R0)
+finish:
+	RET
+
+; column-scan subroutine
+colScan:
+	JNB P0.4, gotKey	; if col0 is cleared - key found
+	INC R0				; otherwise move to next key
+	JNB P0.5, gotKey	; if col1 is cleared - key found
+	INC R0				; otherwise move to next key
+	JNB P0.6, gotKey	; if col2 is cleared - key found
+	INC R0				; otherwise move to next key
+	RET					; return from subroutine - key not found
+gotKey:
+	SETB F0				; key found - set F0
+	RET					; and return from subroutine
+
 
 
 
@@ -149,6 +279,7 @@ sendCharacter:
 	CLR EN			; | negative edge on E
 
 	CALL delay			; wait for BF to clear
+	CALL delay			; wait for BF to clear
 	RET
 
 ;Posiciona o cursor na linha e coluna desejada.
@@ -158,7 +289,7 @@ sendCharacter:
 ;|linha 2 | 40 | 41 | 42 | 43 | 44 |45 | 46 | 47 | 48 | 49 |4A | 4B | 4C | 4D | 4E | 4F |
 ;|--------------------------------------------------------------------------------------|
 posicionaCursor:
-	CLR RS	         ; clear RS - indicates that instruction is being sent to module
+	CLR RS	
 	SETB P1.7		    ; |
 	MOV C, ACC.6		; |
 	MOV P1.6, C			; |
@@ -183,12 +314,13 @@ posicionaCursor:
 	CLR EN			; | negative edge on E
 
 	CALL delay			; wait for BF to clear
+	CALL delay			; wait for BF to clear
 	RET
 
 
 ;Retorna o cursor para primeira posição sem limpar o display
 retornaCursor:
-	CLR RS	      ; clear RS - indicates that instruction is being sent to module
+	CLR RS	
 	CLR P1.7		; |
 	CLR P1.6		; |
 	CLR P1.5		; |
@@ -211,7 +343,7 @@ retornaCursor:
 
 ;Limpa o display
 clearDisplay:
-	CLR RS	      ; clear RS - indicates that instruction is being sent to module
+	CLR RS	
 	CLR P1.7		; |
 	CLR P1.6		; |
 	CLR P1.5		; |
@@ -233,6 +365,7 @@ clearDisplay:
 
 
 delay:
-	MOV R0, #50
-	DJNZ R0, $
+	MOV R7, #50
+	DJNZ R7, $
 	RET
+
