@@ -83,11 +83,8 @@ org 0000h
 org 0030h
 START:
 ; put data in RAM
-	;MOV 40H, #'#'
 	MOV 40H, #'-' 
-	;MOV 41H, #'0'
 	MOV 41H, #'-'
-	;MOV 42H, #'*'
 	MOV 42H, #'-'
 	MOV 43H, #'O'
 	MOV 44H, #'O'
@@ -99,11 +96,8 @@ START:
 	MOV 4AH, #'O'
 	MOV 4BH, #'O'
 
-	;MOV 40H, #'#'
 	MOV 20H, #'-' 
-	;MOV 41H, #'0'
 	MOV 21H, #'-'
-	;MOV 42H, #'*'
 	MOV 22H, #'-'
 	MOV 23H, #'X'
 	MOV 24H, #'X'
@@ -125,42 +119,40 @@ rodada:
 	cpl p3.4
 	jnb p3.4 , rodada1
 	jmp rodada2
-	JMP ROTINA
+	ret
 
 rodada1:
 	mov b, #02h
 	ACALL leituraTeclado
-	JNB F0, ROTINA   ;if F0 is clear, jump to ROTINA
-	MOV A, #07h
+	JNB F0, rodada1   ;if F0 is clear, jump to ROTINA
+	MOV A, #07h		; posição em relação ao display onde vai aparecer
 	ACALL posicionaCursor	
 	MOV A, #40h		;aqui é o teclado do 'O'
-	;MOV A, #20h	;aqui é o teclado do 'X'
 	ADD A, R0
 	MOV R0, A
 	MOV A, @R0        
 	ACALL sendCharacter
-	CLR F0
-	JMP ROTINA
+	clr f0
+	jmp rodada2
 
-	;esta caindo aqui
+
 rodada2:
-	mov b, #01h
+
 	ACALL leituraTeclado
-	JNB F0, ROTINA   ;if F0 is clear, jump to ROTINA
-	MOV A, #07h
+	JNB F0, rodada2   ;if F0 is clear, jump to ROTINA
+	MOV A, #07h		; posição em relação ao display onde vai aparecer
 	ACALL posicionaCursor	
-	;MOV A, #40h		;aqui é o teclado do 'O'
 	MOV A, #20h	;aqui é o teclado do 'X'
 	ADD A, R0
 	MOV R0, A
 	MOV A, @R0        
 	ACALL sendCharacter
-	CLR F0
-	ret
+	clr f0
+	jmp rodada1
+
 
 leituraTeclado:
 	MOV R0, #0			; clear R0 - the first key is key0
-
 	; scan row0
 	MOV P0, #0FFh	
 	CLR P0.0			; clear row0
