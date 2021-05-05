@@ -86,28 +86,7 @@ START:
 	MOV 40H, #'-' 
 	MOV 41H, #'-'
 	MOV 42H, #'-'
-	MOV 43H, #'O'
-	MOV 44H, #'O'
-	MOV 45H, #'O'
-	MOV 46H, #'O'
-	MOV 47H, #'O'
-	MOV 48H, #'O'
-	MOV 49H, #'O'
-	MOV 4AH, #'O'
-	MOV 4BH, #'O'
 
-	MOV 20H, #'-' 
-	MOV 21H, #'-'
-	MOV 22H, #'-'
-	MOV 23H, #'X'
-	MOV 24H, #'X'
-	MOV 25H, #'X'
-	MOV 26H, #'X'
-	MOV 27H, #'X'
-	MOV 28H, #'X'
-	MOV 29H, #'X'
-	MOV 2AH, #'X'
-	MOV 2BH, #'X'
 
 MAIN:
 	ACALL lcd_init
@@ -122,12 +101,21 @@ rodada:
 	ret
 
 rodada1:
+	MOV 43H, #'O'
+	MOV 44H, #'O'
+	MOV 45H, #'O'
+	MOV 46H, #'O'
+	MOV 47H, #'O'
+	MOV 48H, #'O'
+	MOV 49H, #'O'
+	MOV 4AH, #'O'
+	MOV 4BH, #'O'
 	mov b, #02h
 	ACALL leituraTeclado
 	JNB F0, rodada1   ;if F0 is clear, jump to ROTINA
 	MOV A, #07h		; posição em relação ao display onde vai aparecer
 	ACALL posicionaCursor	
-	MOV A, #40h		;aqui é o teclado do 'O'
+	MOV A, #40h
 	ADD A, R0
 	MOV R0, A
 	MOV A, @R0        
@@ -137,12 +125,20 @@ rodada1:
 
 
 rodada2:
-
+	MOV 43H, #'X'
+	MOV 44H, #'X'
+	MOV 45H, #'X'
+	MOV 46H, #'X'
+	MOV 47H, #'X'
+	MOV 48H, #'X'
+	MOV 49H, #'X'
+	MOV 4AH, #'X'
+	MOV 4BH, #'X'
 	ACALL leituraTeclado
 	JNB F0, rodada2   ;if F0 is clear, jump to ROTINA
 	MOV A, #07h		; posição em relação ao display onde vai aparecer
 	ACALL posicionaCursor	
-	MOV A, #20h	;aqui é o teclado do 'X'
+	MOV A, #40h
 	ADD A, R0
 	MOV R0, A
 	MOV A, @R0        
