@@ -97,7 +97,9 @@ ROTINA:
 rodada:
 	cpl p3.4
 	jnb p3.4 , rodada1
+	call salvapo
 	jmp rodada2
+	call salvapo
 	ret
 
 rodada1:
@@ -110,7 +112,6 @@ rodada1:
 	MOV 49H, #'O'
 	MOV 4AH, #'O'
 	MOV 4BH, #'O'
-	mov b, #02h
 	ACALL leituraTeclado
 	JNB F0, rodada1   ;if F0 is clear, jump to ROTINA
 	MOV A, #07h		; posição em relação ao display onde vai aparecer
@@ -121,7 +122,7 @@ rodada1:
 	MOV A, @R0        
 	ACALL sendCharacter
 	clr f0
-	jmp rodada2
+	jmp rodada
 
 
 rodada2:
@@ -144,8 +145,32 @@ rodada2:
 	MOV A, @R0        
 	ACALL sendCharacter
 	clr f0
-	jmp rodada1
+	jmp rodada
 
+salvapo:
+	;por enquanto vou considerar a variavel como o B
+	;simplismente para não ficar parado no codigo
+	mov b, #05h
+	mov 50h, b
+	inc b
+	mov 51h, b
+	inc b
+	mov 52h, b
+	inc b
+	mov 60h, b
+	inc b
+	mov 61h, b
+	inc b
+	mov 62h, b
+	inc b
+	mov 70h, b
+	inc b
+	mov 71h, b
+	inc b
+	mov 72h, b
+	ret
+
+confere:
 
 leituraTeclado:
 	MOV R0, #0			; clear R0 - the first key is key0
