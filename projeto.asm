@@ -90,7 +90,9 @@ START:
 
 MAIN:
 	ACALL lcd_init
+
 ROTINA:
+	call zera
 	jmp rodada
 	JMP ROTINA
 
@@ -146,6 +148,18 @@ rodada2:
 	ACALL sendCharacter
 	clr f0
 	jmp rodada
+
+zera:
+	mov 50h, #00h
+	mov 51h, #00h
+	mov 52h, #00h
+	mov 60h, #00h
+	mov 61h, #00h
+	mov 62h, #00h
+	mov 70h, #00h
+	mov 71h, #00h
+	mov 72h, #00h
+	ret
 
 salvapo:
 	;por enquanto vou considerar a variavel como o B
