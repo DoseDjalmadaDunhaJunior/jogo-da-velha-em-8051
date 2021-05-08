@@ -147,6 +147,7 @@ rodada2:
 	MOV A, @R0        
 	ACALL sendCharacter
 	clr f0
+	jmp confere
 	jmp rodada
 
 zera:
@@ -164,7 +165,7 @@ zera:
 salvapo:
 	;por enquanto vou considerar a variavel como o B
 	;simplismente para não ficar parado no codigo
-	mov b, #05h
+	mov b, #01h
 	mov 50h, b
 	inc b
 	mov 51h, b
@@ -185,6 +186,198 @@ salvapo:
 	ret
 
 confere:
+	mov a, 50h 
+	subb a, #058h
+	jz  confere58abc2
+	call confere4fabc1
+	call confere58adg1
+	call confere4fadg1
+	call confere58aei1
+	call confere4faei1
+	call confere58beh1
+	call confere4fbeh1
+	call confere58cfi1
+	ret
+
+confere58abc2:
+	mov a, 51h
+	subb a, #058h
+	jz confere58abc3
+	ret
+
+confere58abc3:
+	mov a, 52h
+	subb a, #058h
+	jz player1G
+	ret
+
+
+confere4fabc1:
+	mov a, 50h 
+	subb a, #04fh
+	jz  confere4fabc2
+	ret
+
+confere4fabc2:
+	mov a, 51h 
+	subb a, #04fh
+	jz  confere4fabc3
+	ret
+
+confere4fabc3:
+	mov a, 52h
+	subb a, #04fh
+	jz player2G
+	ret
+
+confere58adg1:
+	mov a, 50h
+	subb a, #058h
+	jz confere58adg2
+	ret
+
+confere58adg2:
+	mov a, 60h
+	subb a, #058h
+	jz confere58adg3
+	ret
+
+confere58adg3:
+	mov a, 70h
+	subb a, #058h
+	jz player1G
+	ret
+
+confere4fadg1:
+	mov a, 50h
+	subb a, #04fh
+	jz confere4fadg2
+	ret
+
+
+confere4fadg2:
+	mov a, 60h
+	subb a, #04fh
+	jz confere4fadg3
+	ret
+
+
+confere4fadg3:
+	mov a, 70h
+	subb a, #04fh
+	jz player2G
+	ret
+
+confere58aei1:
+	mov a, 51h
+	subb a, #058h
+	jz confere58aei2
+	ret
+
+confere58aei2:
+	mov a, 61h
+	subb a, #058h
+	jz confere58aei3
+	ret
+
+confere4faei1:
+	mov a, 51h
+	subb a, #04fh
+	jz confere4faei2
+	ret
+
+confere4faei2:
+	mov a, 61h
+	subb a, #04fh
+	jz confere4faeh3
+	ret
+
+confere4faei3:
+	mov a, 72h
+	subb a, #04fh
+	jz player2G
+	ret
+
+confere58beh1:
+	mov a, 50h
+	subb a, #058h
+	jz confere58beh2
+	ret
+
+confere58beh2:
+	mov a, 61h
+	subb a, #058h
+	jz confere58beh3
+	ret
+
+confere58aei3:
+	mov a, 72h
+	subb a, #058h
+	jz player2G
+	ret
+
+confere4fbeh1:
+	mov a, 51h
+	subb a, #04fh
+	jz confere58beh2
+	ret
+
+confere4fbeh2:
+	mov a, 61h
+	subb a, #04fh
+	jz confere58beh3
+	ret
+
+confere4fbeh3:
+	mov a, 71h
+	subb a, #04fh
+	jz player2G
+	ret
+
+confere58cfi1:
+	mov a, 52h
+	subb a, #058h
+	jz confere58cfi2
+	ret
+
+confere58cfi2:
+	mov a, 62h
+	subb a, #058h
+	jz confere58cfi3
+	ret
+
+confere58cfi3:
+	mov a, 72h
+	subb a, #058h
+	jz player1G
+	ret
+
+confere4fcfi1:
+	mov a, 52h
+	subb a, #04fh
+	jz confere4fcfi2
+	ret
+
+confere4fcfi2:
+	mov a, 62h
+	subb a, #04fh
+	jz confere4fcfi3
+	ret
+
+confere4fcfi3:
+	mov a, 72h
+	subb a, #04fh
+	jz player2G
+	ret
+
+player1G:
+;mensagem que o jogador 1 ganhou
+	sjmp $;
+
+player2G:
+;mensagem que o jogador 2 ganhou
+	sjmp $;
+
 
 leituraTeclado:
 	MOV R0, #0			; clear R0 - the first key is key0
