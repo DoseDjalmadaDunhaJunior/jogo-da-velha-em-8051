@@ -208,7 +208,7 @@ confere58abc2:
 confere58abc3:
 	mov a, 52h
 	subb a, #058h
-	jz player1G
+	;jz player1G
 	ret
 
 
@@ -227,7 +227,7 @@ confere4fabc2:
 confere4fabc3:
 	mov a, 52h
 	subb a, #04fh
-	jz player2G
+	;jz player2G
 	ret
 
 confere58adg1:
@@ -245,7 +245,7 @@ confere58adg2:
 confere58adg3:
 	mov a, 70h
 	subb a, #058h
-	jz player1G
+	;jz player1G
 	ret
 
 confere4fadg1:
@@ -265,7 +265,7 @@ confere4fadg2:
 confere4fadg3:
 	mov a, 70h
 	subb a, #04fh
-	jz player2G
+	;jz player2G
 	ret
 
 confere58aei1:
@@ -289,13 +289,13 @@ confere4faei1:
 confere4faei2:
 	mov a, 61h
 	subb a, #04fh
-	jz confere4faeh3
+	jz confere4faei3
 	ret
 
 confere4faei3:
 	mov a, 72h
 	subb a, #04fh
-	jz player2G
+	;jz player2G
 	ret
 
 confere58beh1:
@@ -310,10 +310,16 @@ confere58beh2:
 	jz confere58beh3
 	ret
 
+confere58beh3:
+	mov a, 71h
+	subb a, #058h
+	;jz player1G
+	ret
+
 confere58aei3:
 	mov a, 72h
 	subb a, #058h
-	jz player2G
+	;jz player2G
 	ret
 
 confere4fbeh1:
@@ -331,7 +337,7 @@ confere4fbeh2:
 confere4fbeh3:
 	mov a, 71h
 	subb a, #04fh
-	jz player2G
+	;jz player2G
 	ret
 
 confere58cfi1:
@@ -349,7 +355,7 @@ confere58cfi2:
 confere58cfi3:
 	mov a, 72h
 	subb a, #058h
-	jz player1G
+	;jz player1G
 	ret
 
 confere4fcfi1:
@@ -367,7 +373,115 @@ confere4fcfi2:
 confere4fcfi3:
 	mov a, 72h
 	subb a, #04fh
-	jz player2G
+	;jz player2G
+	ret
+
+confere58def1:
+	mov a, 60h
+	subb a, #058h
+	jz confere58def2
+	ret
+
+confere58def2:
+	mov a, 61h
+	subb a, #058h
+	jz confere58def3
+	ret
+
+confere58def3:
+	mov a, 62h
+	subb a, #058h
+	;jz player1G
+	ret
+
+confere4fdef1:
+	mov a, 60h
+	subb a, #04fh
+	jz confere4fdef2
+	ret
+
+confere4fdef2:
+	mov a, 61h
+	subb a, #04fh
+	jz confere4fdef3
+	ret
+
+confere4fdef3:
+	mov a, 62h
+	subb a, #04fh
+	;jz player2G
+	ret
+
+confere58ceg1:
+	mov a, 52h
+	subb a, #058h
+	jz confere58ceg2
+	ret
+
+confere58ceg2:
+	mov a, 61h
+	subb a, #058h
+	jz confere58ceg3
+	ret
+
+confere58ceg3:
+	mov a, 70h
+	subb a, #058h
+	;jz player1G
+	ret
+
+confere4fceg1:
+	mov a, 52h
+	subb a, #04fh
+	jz confere4fceg2
+	ret
+
+confere4fceg2:
+	mov a, 61h
+	subb a, #04fh
+	jz confere4fceg3
+	ret
+
+confere4fceg3:
+	mov a, 70h
+	subb a, #04fh
+	;jz player2G
+	ret
+
+confere58ghi1:
+	mov a, 70h
+	subb a, #058h
+	jz confere58ghi2
+	ret
+
+confere58ghi2:
+	mov a, 71h
+	subb a, #058h
+	jz confere58ghi3
+	ret
+
+confere58ghi3:
+	mov a, 72h
+	subb a, #058h
+	;jz player1G
+	ret
+
+confere4fghi1:
+	mov a, 70h
+	subb a, #04fh
+	jz confere4fghi2
+	ret
+
+confere4fghi2:
+	mov a, 71h
+	subb a, #04fh
+	jz confere4fghi3
+	ret
+
+confere4fghi3:
+	mov a, 72h
+	subb a, #04fh
+	;jz player2G
 	ret
 
 player1G:
