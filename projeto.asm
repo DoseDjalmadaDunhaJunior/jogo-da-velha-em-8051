@@ -185,6 +185,65 @@ salvapo:
 	mov 72h, b
 	ret
 
+conferex0:
+	jnb p0.0, conferey1
+	jnb p0.1, conferey2
+	jnb p0.2, conferey3
+
+conferey1:
+	jnb p0.6, salvapo00
+	jnb p0.5, salvapo01
+	jnb p0.4, salvapo02
+	ret
+
+salvapo00:
+	mov 50h, acc
+	ret
+
+salvapo01:
+	mov 51, acc 
+	ret
+
+salvapo02:
+	mov 52, acc
+	ret	
+
+conferey2:
+	jnb p0.6, salvapo10
+	jnb p0.5, salvapo11
+	jnb p0.4, salvapo12
+	ret
+
+salvapo10:
+	mov 60h, acc
+	ret
+
+salvapo11:
+	mov 61h, acc
+	ret
+
+salvapo12:
+	mov 62h, acc
+	ret
+
+conferey3:
+	jnb p0.6, salvapo20
+	jnb p0.5, salvapo21
+	jnb p0.4, salvapo22
+	ret
+
+salvapo20:
+	mov 70h, acc
+	ret
+
+salvapo21:
+	mov 71h, acc
+	ret
+	
+salvapo22:
+	mov 72h, acc
+	ret
+
 confere:
 	mov a, 50h 
 	subb a, #058h
