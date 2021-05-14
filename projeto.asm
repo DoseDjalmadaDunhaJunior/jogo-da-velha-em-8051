@@ -165,35 +165,30 @@ zera:
 salvapo:
 	;por enquanto vou considerar a variavel como o B
 	;simplismente para não ficar parado no codigo
-	mov b, #01h
-	mov 50h, b
-	inc b
-	mov 51h, b
-	inc b
-	mov 52h, b
-	inc b
-	mov 60h, b
-	inc b
-	mov 61h, b
-	inc b
-	mov 62h, b
-	inc b
-	mov 70h, b
-	inc b
-	mov 71h, b
-	inc b
-	mov 72h, b
+	call conferex0
 	ret
 
 conferex0:
+	cpl p0.0
+	cpl p0.1
+	cpl p0.2
 	jnb p0.0, conferey1
 	jnb p0.1, conferey2
 	jnb p0.2, conferey3
+	cpl p0.0
+	cpl p0.1
+	cpl p0.2
 
 conferey1:
+	cpl p0.6
+	cpl p0.5
+	cpl p0.4
 	jnb p0.6, salvapo00
 	jnb p0.5, salvapo01
 	jnb p0.4, salvapo02
+	cpl p0.6
+	cpl p0.5
+	cpl p0.4
 	ret
 
 salvapo00:
@@ -209,9 +204,15 @@ salvapo02:
 	ret	
 
 conferey2:
+	cpl p0.6
+	cpl p0.5
+	cpl p0.4
 	jnb p0.6, salvapo10
 	jnb p0.5, salvapo11
 	jnb p0.4, salvapo12
+	cpl p0.6
+	cpl p0.5
+	cpl p0.4
 	ret
 
 salvapo10:
@@ -227,9 +228,15 @@ salvapo12:
 	ret
 
 conferey3:
+	cpl p0.6
+	cpl p0.5
+	cpl p0.4
 	jnb p0.6, salvapo20
 	jnb p0.5, salvapo21
 	jnb p0.4, salvapo22
+	cpl p0.6
+	cpl p0.5
+	cpl p0.4
 	ret
 
 salvapo20:
@@ -600,7 +607,7 @@ gotKey:
 ; initialise the display
 ; see instruction set for details
 lcd_init:
-
+	call salvapo
 	CLR RS		; clear RS - indicates that instructions are being sent to the module
 
 ; function set	
